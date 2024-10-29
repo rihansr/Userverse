@@ -1,8 +1,8 @@
-final utils = _Utils.value;
+final extension = _Extension.function;
 
-class _Utils {
-  static _Utils get value => _Utils._();
-  _Utils._();
+class _Extension {
+  static _Extension get function => _Extension._();
+  _Extension._();
 }
 
 extension StringExtension on String {

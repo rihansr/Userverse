@@ -23,6 +23,9 @@
   "passwordHint": "••••••••",
   "@_MESSAGES": "<-----------------MESSAGES----------------->",
   "someErrorOccured": "Some Error Occured!",
+  "networkNotAvailable": "Network not available!",
+  "requestTimeout": "Request timeout!",
+  "noDataFound": "No data found!",
   "emptyField": "{field, select, null{Field} other {{field}}} is required",
   "@emptyField": {
     "placeholders": {

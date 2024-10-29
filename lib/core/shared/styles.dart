@@ -1,6 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import '../../core/shared/utils.dart';
+import '../utils/extensions.dart';
 import '../service/navigation_service.dart';
 import 'colors.dart';
 import 'enums.dart';

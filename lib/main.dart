@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'core/config/app_config.dart';
+import 'core/config/app_settings.dart';
+import 'core/config/theme_config.dart';
 import 'core/routing/routing.dart';
 import 'core/service/navigation_service.dart';
 
@@ -11,11 +14,27 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'Userverse',
-      debugShowCheckedModeBanner: false,
-      scaffoldMessengerKey: navigator.scaffoldMessengerKey,
-      routerConfig: routing,
+    return ValueListenableBuilder(
+      valueListenable: appSettings.settings,
+      builder: (_, settings, __) {
+        SystemChrome.setSystemUIOverlayStyle(
+          SystemUiOverlayStyle(
+            statusBarColor: Colors.transparent,
+            statusBarIconBrightness: settings.themeMode == ThemeMode.light
+                ? Brightness.dark
+                : Brightness.light,
+          ),
+        );
+        return MaterialApp.router(
+          title: 'Userverse',
+          debugShowCheckedModeBanner: false,
+          scaffoldMessengerKey: navigator.scaffoldMessengerKey,
+          themeMode: settings.themeMode,
+          theme: theming(ThemeMode.light),
+          darkTheme: theming(ThemeMode.dark),
+          routerConfig: routing,
+        );
+      },
     );
   }
 }

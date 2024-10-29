@@ -21,7 +21,7 @@ class AppSettings {
   // Theme
   set theme(ThemeMode mode) =>
       _settings = settings.value.copyWith(themeMode: mode);
-
+  
   ThemeMode get theme => settings.value.themeMode;
 
   // Locale

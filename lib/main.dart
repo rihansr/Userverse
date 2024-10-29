@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
+import 'core/config/app_config.dart';
+import 'core/routing/routing.dart';
+import 'core/service/navigation_service.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+Future<void> main() async =>
+    await appConfig.init().then((_) => runApp(const MyApp()));
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Userverse',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home:  Container(),
+      debugShowCheckedModeBanner: false,
+      scaffoldMessengerKey: navigator.scaffoldMessengerKey,
+      routerConfig: routing,
     );
   }
 }

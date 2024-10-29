@@ -4,6 +4,7 @@ import '../../core/shared/utils.dart';
 import '../service/navigation_service.dart';
 import 'colors.dart';
 import 'enums.dart';
+import 'strings.dart';
 
 final style = _Style.value;
 
@@ -54,7 +55,7 @@ class _Style {
         ),
         action: (onAction != null)
             ? SnackBarAction(
-                label: actionLabel ?? type?.actionLabel ?? 'Okay',
+                label: actionLabel ?? type?.actionLabel ?? string.of(navigator.context).okay,
                 textColor: type?.textColor,
                 onPressed: onAction,
               )
@@ -67,9 +68,9 @@ extension _MessageTypeExtensions on AlertType {
   String get actionLabel {
     switch (this) {
       case AlertType.error:
-        return 'Retry';
+        return string.of(navigator.context).cancel;
       default:
-        return 'Okay';
+        return string.of(navigator.context).okay;
     }
   }
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/services.dart';
 import 'core/config/app_config.dart';
 import 'core/config/app_settings.dart';
@@ -32,6 +33,9 @@ class MyApp extends StatelessWidget {
           themeMode: settings.themeMode,
           theme: theming(ThemeMode.light),
           darkTheme: theming(ThemeMode.dark),
+          locale: settings.language.locale,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
           routerConfig: routing,
         );
       },

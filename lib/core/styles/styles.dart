@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../utils/extensions.dart';
 import '../service/navigation_service.dart';
 import 'colors.dart';
-import 'enums.dart';
+import '../shared/domain/entities/enums.dart';
 import 'strings.dart';
 
 final style = _Style.value;

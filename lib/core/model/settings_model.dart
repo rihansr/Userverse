@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import '../shared/enums.dart';
+import '../shared/domain/entities/enums.dart';
 
 class Settings {
   final ThemeMode themeMode;

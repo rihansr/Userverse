@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../shared/dimens.dart';
+import '../../../styles/dimens.dart';
 
 class CardBox extends StatelessWidget {
   final List<Widget> children;

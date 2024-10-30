@@ -4,10 +4,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 import '../../../../core/routing/routes.dart';
-import '../../../../core/shared/constants.dart';
-import '../../../../core/shared/dimens.dart';
-import '../../../../core/shared/drawables.dart';
-import '../../../../core/widget/backdrop_widget.dart';
+import '../../../../core/utils/constants.dart';
+import '../../../../core/styles/dimens.dart';
+import '../../../../core/styles/drawables.dart';
+import '../../../../core/shared/data/data_sources/local_storage.dart';
+import '../../../../core/utils/injections.dart';
+import '../../../../core/shared/presentation/widgets/backdrop_widget.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -25,7 +27,9 @@ class _SplashPageState extends State<SplashPage> {
     super.initState();
   }
 
-  _navigateTo() => context.pushReplacementNamed(Routes.login);
+  _navigateTo() => context.pushReplacementNamed(
+        sl<LocalStorage>().isLoggedIn ? Routes.landing : Routes.login,
+      );
 
   @override
   void dispose() {
@@ -36,28 +40,28 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
-        extendBodyBehindAppBar: true,
-        body: Backdrop(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              const SizedBox(height: 32),
-              SvgPicture.asset(
-                drawable.splashLogo,
-                width: dimen.width / 1.5,
-                fit: BoxFit.contain,
-              ),
-              LottieBuilder.asset(
-                drawable.loading,
-                height: 72,
-                width: 72,
-              ),
-              const SizedBox(height: 32),
-            ],
-          ),
+      appBar: AppBar(),
+      extendBodyBehindAppBar: true,
+      body: Backdrop(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            const SizedBox(height: 32),
+            SvgPicture.asset(
+              drawable.splashLogo,
+              width: dimen.width / 1.5,
+              fit: BoxFit.contain,
+            ),
+            LottieBuilder.asset(
+              drawable.loading,
+              height: 72,
+              width: 72,
+            ),
+            const SizedBox(height: 32),
+          ],
         ),
-      );
+      ),
+    );
   }
 }

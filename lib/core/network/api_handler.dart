@@ -3,24 +3,39 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'error/dio_error_handler.dart';
+import 'error/exceptions.dart';
+import 'logger_interceptor.dart';
 import '../utils/debug.dart';
 import '../utils/encryptor.dart';
-import '../shared/enums.dart';
-import '../shared/strings.dart';
-import '../shared/styles.dart';
-import 'navigation_service.dart';
-
-final api = _Api.function;
+import '../shared/domain/entities/enums.dart';
+import '../styles/strings.dart';
+import '../styles/styles.dart';
+import '../service/navigation_service.dart';
+import 'model/response_model.dart';
 
 enum Method { get, post, put, delete }
 
 enum InvokeType { regular, multipart, download }
 
-class _Api {
-  static _Api get function => _Api._();
-  _Api._();
+class ApiHandler {
+  static late Dio _dio;
 
-  Future<Response> invoke({
+  static init() {
+    _dio = Dio();
+    _dio.interceptors.add(_loggerInterceptor);
+  }
+
+  static LoggerInterceptor get _loggerInterceptor => LoggerInterceptor(
+        request: true,
+        requestBody: true,
+        error: true,
+        responseBody: true,
+        responseHeader: false,
+        requestHeader: true,
+      );
+
+  Future<DioResponse> invoke({
     InvokeType via = InvokeType.regular,
     required String baseUrl,
     String? endpoint,
@@ -58,54 +73,40 @@ class _Api {
 
     encoding ??= enableEncoding ? utf8 : null;
 
-    Response response = await _exceptionHandler(
+    DioResponse response = await _exceptionHandler(
           (() async {
             BaseOptions baseOptions = BaseOptions(
               method: method.name,
-              connectTimeout: timeout,
-              sendTimeout: timeout,
-              receiveTimeout: timeout,
               baseUrl: baseUrl,
               queryParameters: queryParams,
               headers: headers,
               contentType: contentTypeSupported
                   ? contentType ?? Headers.jsonContentType
                   : null,
-              validateStatus: (status) => true,
-            );
-
-            final LogInterceptor logInterceptor = LogInterceptor(
-              request: false,
-              requestHeader: false,
-              responseHeader: false,
-              error: false,
-              logPrint: (s) => {},
+              validateStatus: (status) => status! < 300,
             );
 
             int progress = -1;
 
-            Dio dioClient = Dio(
-              (() {
-                switch (via) {
-                  case InvokeType.regular:
-                    return baseOptions.copyWith(
-                      sendTimeout: timeout,
-                      receiveTimeout: timeout,
-                    );
-                  case InvokeType.download:
-                    return baseOptions.copyWith(
-                      responseType: ResponseType.bytes,
-                      followRedirects: false,
-                    );
-                  default:
-                    return baseOptions;
-                }
-              }()),
-            )..interceptors.addAll([
-                logInterceptor,
-              ]);
+            _dio.options = (() {
+              switch (via) {
+                case InvokeType.regular:
+                  return baseOptions.copyWith(
+                    connectTimeout: timeout,
+                    sendTimeout: timeout,
+                    receiveTimeout: timeout,
+                  );
+                case InvokeType.download:
+                  return baseOptions.copyWith(
+                    responseType: ResponseType.bytes,
+                    followRedirects: false,
+                  );
+                default:
+                  return baseOptions;
+              }
+            }());
 
-            return await dioClient
+            return await _dio
                 .request(
                   endpoint!,
                   data: via == InvokeType.multipart
@@ -134,7 +135,7 @@ class _Api {
                   onTimeout: () => throw TimeoutException(null),
                 )
                 .then(
-                  (response) => Response(
+                  (response) => DioResponse(
                     statusCode: response.statusCode ?? 404,
                     data: response.data,
                   ),
@@ -142,7 +143,7 @@ class _Api {
           })(),
           showErrorMessage,
         ) ??
-        Response();
+        DioResponse();
 
     return justifyResponse
         ? _justifyResponse(response,
@@ -163,41 +164,25 @@ class _Api {
           HttpHeaders.authorizationHeader: "Bearer ${decryptor(token)}",
       };
 
-  String basicAuthGenerator(
-          {required String username, required String password}) =>
-      'Basic ${base64Encode(utf8.encode('$username:$password'))}';
-
   Future<dynamic>? _exceptionHandler(Future function,
       [showMessage = true]) async {
     try {
       return await function;
-    } on SocketException {
-      _showErrorMessage(
-        string.of().networkNotAvailable,
-        type: AlertType.error,
-        logOnly: !showMessage,
-        tag: "Socket Exception",
-      );
-    } on TimeoutException {
-      _showErrorMessage(
-        string.of().requestTimeout,
-        type: AlertType.error,
-        logOnly: !showMessage,
-        tag: "Timeout Exception",
-      );
+    } on DioException catch (e) {
+      if (e.type == DioExceptionType.cancel) {
+        throw CancelTokenException(handleDioError(e), e.response?.statusCode);
+      } else {
+        throw ServerException(handleDioError(e), e.response?.statusCode);
+      }
+    } on ServerException {
+      rethrow;
     } catch (e) {
-      _showErrorMessage(
-        e.toString(),
-        type: AlertType.error,
-        logOnly: !showMessage,
-        tag: "Exception",
-      );
+      throw ServerException(e.toString(), null);
     }
-    return null;
   }
 
-  Response _justifyResponse(
-    Response response, {
+  DioResponse _justifyResponse(
+    DioResponse response, {
     String tag = "API",
     bool showMessage = true,
   }) {
@@ -216,7 +201,7 @@ class _Api {
     return response.copyWith(data: null);
   }
 
-  void _showErrorMessage(
+  static void _showErrorMessage(
     Object? response, {
     String? tag,
     String? orElse,
@@ -260,28 +245,4 @@ class _Api {
       );
     }
   }
-}
-
-class Response {
-  final int statusCode;
-  final String? message;
-  final dynamic data;
-
-  Response({this.statusCode = 404, this.message, this.data});
-
-  Response copyWith({
-    int? statusCode,
-    String? message,
-    dynamic data,
-  }) {
-    return Response(
-      statusCode: statusCode ?? this.statusCode,
-      message: message ?? this.message,
-      data: data ?? this.data,
-    );
-  }
-
-  @override
-  String toString() =>
-      'Status Code: $statusCode\nMessage: $message\nData: $data';
 }

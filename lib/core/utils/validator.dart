@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../shared/strings.dart' as str;
+import '../styles/strings.dart' as str;
 
 abstract class Validator {
   bool isEmpty(var value);

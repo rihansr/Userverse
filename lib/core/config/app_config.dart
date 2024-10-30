@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../shared/local_storage.dart';
+import '../utils/injections.dart';
 
 enum _AppMode { debug, production }
 
@@ -24,7 +24,7 @@ class _AppConfig {
         DeviceOrientation.portraitUp,
         DeviceOrientation.portraitDown,
       ]),
-      localStorage.init(),
+      initInjections(),
     ]);
   }
 

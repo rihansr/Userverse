@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../shared/colors.dart';
-import '../shared/constants.dart';
+import '../styles/colors.dart';
+import '../utils/constants.dart';
 
 ThemeData theming(ThemeMode mode) {
   ColorPalette colorPalette;

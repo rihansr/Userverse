@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 import '../../../../../core/shared/presentation/widgets/listview_builder_widget.dart';
 import '../../../../../core/styles/drawables.dart';
 import '../../../../../core/utils/injections.dart';

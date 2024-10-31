@@ -2,6 +2,7 @@
   "@@locale": "en",
   "@_TITLES": "<-----------------TITLES----------------->",
   "enterYourDetails": "Welcome back! Please enter your details.",
+  "wantToLogout": "Are you sure you want ot logout?",
   "@_LABELS": "<-----------------LABELS----------------->",
   "appName": "Userverse",
   "anonymous": "Anonymous",

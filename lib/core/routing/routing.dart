@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:userverse/features/dashboard/presentation/pages/dashboard_page.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/splash/presentation/pages/splash_page.dart';
+import '../../features/dashboard/presentation/pages/dashboard_page.dart';
 import '../../features/user/presentation/pages/user_details_page.dart';
 import '../service/navigation_service.dart';
 import 'routes.dart';
@@ -34,7 +34,7 @@ final GoRouter routing = GoRouter(
     ),
     GoRoute(
       name: Routes.user,
-      path: Routes.user,
+      path: '${Routes.user}/:id',
       builder: (BuildContext context, GoRouterState state) {
         return const UserDetailsPage();
       },

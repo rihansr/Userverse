@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class UsersPage extends StatelessWidget {
-  const UsersPage({super.key});
+class SettingsTabPage extends StatelessWidget {
+  const SettingsTabPage({super.key});
 
   @override
   Widget build(BuildContext context) {

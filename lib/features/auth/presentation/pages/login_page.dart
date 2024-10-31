@@ -109,38 +109,39 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     const SizedBox(height: 16),
                     BlocConsumer<AuthBloc, AuthState>(
-                        bloc: _bloc,
-                        listener: (context, state) {
-                          debug.print(state);
-                          if (state is ErrorAuthState) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              style.snackbar(state.errorMsg,
-                                  type: AlertType.error),
-                            );
-                          } else if (state is SuccessAuthState) {
-                            debug.print(state.token, tag: "Token");
-                            sl<LocalStorage>().token = state.token;
-                            debug.print(sl<LocalStorage>().token,
-                                tag: "Navigation");
-
-                            context.pushReplacementNamed(Routes.landing);
-                          }
-                        },
-                        builder: (context, state) {
-                          return Button(
-                            label: string.of(context).signIn,
-                            onPressed: () {
-                              setState(() => enabledAutoValidate = true);
-                              _bloc.add(
-                                OnLoginEvent(
-                                  validator.string(emailController)!,
-                                  validator.string(passwordController)!,
-                                ),
-                              );
-                            },
-                            loading: state is LoadingAuthState,
+                      bloc: _bloc,
+                      listener: (context, state) {
+                        debug.print(state);
+                        if (state is ErrorAuthState) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            style.snackbar(state.errorMsg,
+                                type: AlertType.error),
                           );
-                        }),
+                        } else if (state is SuccessAuthState) {
+                          debug.print(state.token, tag: "Token");
+                          sl<LocalStorage>().token = state.token;
+                          debug.print(sl<LocalStorage>().token,
+                              tag: "Navigation");
+
+                          context.pushReplacementNamed(Routes.landing);
+                        }
+                      },
+                      builder: (context, state) {
+                        return Button(
+                          label: string.of(context).signIn,
+                          onPressed: () {
+                            setState(() => enabledAutoValidate = true);
+                            _bloc.add(
+                              OnLoginEvent(
+                                validator.string(emailController)!,
+                                validator.string(passwordController)!,
+                              ),
+                            );
+                          },
+                          loading: state is LoadingAuthState,
+                        );
+                      },
+                    ),
                   ],
                 ),
               ),

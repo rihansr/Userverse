@@ -75,13 +75,10 @@ String handleDioError(DioException error) {
       errorDescription = "Send timeout in connection with API server";
       break;
     case DioExceptionType.badCertificate:
-      // TODO: Handle this case.
       break;
     case DioExceptionType.connectionError:
-      // TODO: Handle this case.
       break;
     case DioExceptionType.unknown:
-      // TODO: Handle this case.
       break;
   }
 

@@ -15,8 +15,12 @@ class AddressModel {
     this.zipcode,
   });
 
-  factory AddressModel.fromJson(json) =>
-      _$AddressModelFromJson(json);
+  factory AddressModel.fromJson(json) => _$AddressModelFromJson(json);
 
   toJson() => _$AddressModelToJson(this);
+
+  @override
+  String toString() {
+    return [suite, street, city, zipcode].where((e) => e != null).join(', ');
+  }
 }

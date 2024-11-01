@@ -1,0 +1,103 @@
+{
+  "@@locale": "es",
+  "@_TITLES": "<-----------------TITLES----------------->",
+  "enterYourDetails": "¡Bienvenido de nuevo! Por favor, introduzca sus datos.",
+  "wantToLogout": "¿Estás seguro de que quieres cerrar la sesión?",
+  "@_LABELS": "<-----------------LABELS----------------->",
+  "appName": "Userverse",
+  "anonymous": "Anónimo",
+  "userDetails": "Información del usuario",
+  "login": "Iniciar sesión",
+  "logout": "Cerrar sesión",
+  "signIn": "Registrarse",
+  "email": "Correo electrónico",
+  "password": "Contraseña",
+  "okay": "De acuerdo",
+  "retry": "Reintentar",
+  "cancel": "Cancelar",
+  "home": "Casa",
+  "users": "Usuarios",
+  "settings": "Ajustes",
+  "language": "Idioma",
+  "thememode": "Modo de tema",
+  "annonymous": "Anónimo",
+  "@_HINTS": "<-----------------HINTS----------------->",
+  "emailHint": "johndoe@example.com",
+  "passwordHint": "••••••••",
+  "@_MESSAGES": "<-----------------MESSAGES----------------->",
+  "someErrorOccured": "¡Se produjo algún error!",
+  "networkNotAvailable": "¡Red no disponible!",
+  "requestTimeout": "¡Tiempo de espera de la solicitud!",
+  "noDataFound": "¡No se encontraron datos!",
+  "emptyField": "{field, select, null{Field} other {{field}}} es requerido",
+  "@emptyField": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
+  "inputLengthError": "{field, select, null{Field must be {min}-{max} characters long} other {{field} must be {min}-{max} characters long}}",
+  "@inputLengthError": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      },
+      "min": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "inputMinLengthError": "{field, select, null{Field must have at least {min} characters} other {{field} must have at least {min} characters}}",
+  "@inputMinLengthError": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      },
+      "min": {
+        "type": "int"
+      }
+    }
+  },
+  "inputMaxLengthError": "{field, select, null{Field can contain upto {max} characters} other {{field} can contain upto {max} characters}}",
+  "@inputMaxLengthError": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "inputMaxValueError": "{field, select, null{Field max limit {value} characters} other {{field} max limit {value}}}",
+  "@inputMaxValueError": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "fieldNotMatch": "{field, select, null{Field} other {{field}}} no coincide",
+  "@fieldNotMatch": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
+  "notValidField": "{field, select, null{Field} other {{field}}} no es válido",
+  "@notValidField": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  }
+}

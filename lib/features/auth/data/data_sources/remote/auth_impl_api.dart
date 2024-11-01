@@ -9,7 +9,7 @@ class AuthImplApi extends AuthApi {
   CancelToken cancelToken = CancelToken();
 
   AuthImplApi();
-  
+
   @override
   Future<String?> login(Map<String, dynamic> body) async {
     final result = await sl<ApiHandler>().invoke(

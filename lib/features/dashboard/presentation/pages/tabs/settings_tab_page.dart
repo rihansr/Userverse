@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../../core/config/app_settings.dart';
 import '../../../../../core/routing/routes.dart';
 import '../../../../../core/service/navigation_service.dart';
-import '../../../../../core/shared/data/data_sources/local_storage.dart';
+import '../../../../../core/shared/data/data_sources/shared_prefs.dart';
 import '../../../../../core/shared/domain/entities/enums.dart';
 import '../../../../../core/shared/presentation/widgets/button_widget.dart';
 import '../../../../../core/shared/presentation/widgets/modal_bottomsheet_widget.dart';
@@ -133,7 +133,7 @@ class _LogoutSection extends StatelessWidget {
               background: Theme.of(context).colorScheme.tertiary,
               onPressed: () {
                 {
-                  sl<LocalStorage>().token = null;
+                  sl<SharedPrefs>().token = null;
                   Navigator.pop(context);
                   context.pushReplacementNamed(Routes.login);
                 }

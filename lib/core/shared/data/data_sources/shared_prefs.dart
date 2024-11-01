@@ -1,10 +1,10 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../model/settings_model.dart';
 
-class LocalStorage {
+class SharedPrefs {
   final SharedPreferences _sharedPrefs;
 
-  LocalStorage(this._sharedPrefs);
+  SharedPrefs(this._sharedPrefs);
 
   static const String _settingsKey = "settings_sp_key";
   static const String _authTokenKey = "auth_token_sp_key";
@@ -20,10 +20,10 @@ class LocalStorage {
 
   // Auth
   bool get isLoggedIn => token != null;
-  
-  set token(String? token) {
-    if (token != null) _sharedPrefs.setString(_authTokenKey, token);
-  }
+
+  set token(String? token) => token == null
+      ? _sharedPrefs.remove(_authTokenKey)
+      : _sharedPrefs.setString(_authTokenKey, token);
 
   String? get token => _sharedPrefs.getString(_authTokenKey);
 }

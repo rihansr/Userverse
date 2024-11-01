@@ -7,7 +7,7 @@ import '../../../../core/routing/routes.dart';
 import '../../../../core/utils/constants.dart';
 import '../../../../core/styles/dimens.dart';
 import '../../../../core/styles/drawables.dart';
-import '../../../../core/shared/data/data_sources/local_storage.dart';
+import '../../../../core/shared/data/data_sources/shared_prefs.dart';
 import '../../../../core/utils/injections.dart';
 import '../../../../core/shared/presentation/widgets/backdrop_widget.dart';
 
@@ -28,7 +28,7 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   _navigateTo() => context.pushReplacementNamed(
-        sl<LocalStorage>().isLoggedIn ? Routes.landing : Routes.login,
+        sl<SharedPrefs>().isLoggedIn ? Routes.landing : Routes.login,
       );
 
   @override

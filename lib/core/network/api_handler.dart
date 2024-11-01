@@ -1,17 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:userverse/core/utils/debug.dart';
 import 'error/dio_error_handler.dart';
 import 'error/exceptions.dart';
 import 'logger_interceptor.dart';
-import '../utils/debug.dart';
 import '../utils/encryptor.dart';
-import '../shared/domain/entities/enums.dart';
-import '../styles/strings.dart';
-import '../styles/styles.dart';
-import '../service/navigation_service.dart';
 import 'model/response_model.dart';
 
 enum Method { get, post, put, delete }
@@ -50,7 +45,6 @@ class ApiHandler {
     bool contentTypeSupported = false,
     String? token,
     bool enableEncoding = true,
-    bool justifyResponse = true,
     bool showErrorMessage = true,
     Encoding? encoding,
     Function(int)? onProgress,
@@ -129,10 +123,10 @@ class ApiHandler {
                     }
                   },
                 )
-                .onError((error, stackTrace) => throw (error.toString()))
+                .onError((error, stackTrace)  => throw 'Something went wrong!')
                 .timeout(
                   timeout,
-                  onTimeout: () => throw TimeoutException(null),
+                  onTimeout: () => throw 'Request timed out',
                 )
                 .then(
                   (response) => DioResponse(
@@ -145,10 +139,7 @@ class ApiHandler {
         ) ??
         DioResponse();
 
-    return justifyResponse
-        ? _justifyResponse(response,
-            tag: endpoint, showMessage: showErrorMessage)
-        : response;
+    return response;
   }
 
   String _buildEndpoint({
@@ -178,71 +169,6 @@ class ApiHandler {
       rethrow;
     } catch (e) {
       throw ServerException(e.toString(), null);
-    }
-  }
-
-  DioResponse _justifyResponse(
-    DioResponse response, {
-    String tag = "API",
-    bool showMessage = true,
-  }) {
-    if ((response.statusCode == 200 ||
-        response.statusCode == 201 ||
-        response.statusCode == 202 ||
-        response.statusCode == 409)) {
-      debug.print(response.data, tag: tag);
-      return response.copyWith(
-        message: (response.data is Map?) ? (response.data?['message']) : null,
-      );
-    } else {
-      _showErrorMessage(response,
-          tag: tag, logOnly: !showMessage, type: AlertType.error);
-    }
-    return response.copyWith(data: null);
-  }
-
-  static void _showErrorMessage(
-    Object? response, {
-    String? tag,
-    String? orElse,
-    String? actionLabel,
-    dynamic Function()? onAction,
-    AlertType? type,
-    bool logOnly = false,
-  }) {
-    if (response == null) return;
-    response = (response is Response
-            ? response.data is Map
-                ? response.data.containsKey('error')
-                    ? response.data['error'] is Map
-                        ? response.data['error']['message']
-                        : response.data['error']
-                    : response.data.containsKey('message')
-                        ? response.data['message']
-                        : response.data.containsKey('errors')
-                            ? response.data['errors'].toString()
-                            : orElse ?? string.of().someErrorOccured
-                : response.data.toString().isNotEmpty
-                    ? response.data
-                    : string.of().noDataFound
-            : response) ??
-        orElse ??
-        string.of().someErrorOccured;
-
-    response = '${response ?? ''}';
-    debug.print(response, tag: tag ?? "Error Log");
-
-    if (logOnly) {
-      return;
-    } else if ('$response'.isNotEmpty) {
-      ScaffoldMessenger.of(navigator.context).showSnackBar(
-        style.snackbar(
-          '$response',
-          type: type,
-          onAction: onAction,
-          actionLabel: actionLabel,
-        ),
-      );
     }
   }
 }

@@ -7,7 +7,7 @@ import '../../../../core/routing/routes.dart';
 import '../../../../core/styles/dimens.dart';
 import '../../../../core/styles/drawables.dart';
 import '../../../../core/shared/domain/entities/enums.dart';
-import '../../../../core/shared/data/data_sources/local_storage.dart';
+import '../../../../core/shared/data/data_sources/shared_prefs.dart';
 import '../../../../core/styles/strings.dart';
 import '../../../../core/styles/styles.dart';
 import '../../../../core/utils/injections.dart';
@@ -29,25 +29,25 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final AuthBloc _bloc = AuthBloc(loginUseCase: sl<LoginUseCase>());
 
-  bool enabledAutoValidate = false;
+  bool _enabledAutoValidate = false;
 
-  late GlobalKey<FormState> formKey;
-  late TextEditingController emailController;
-  late TextEditingController passwordController;
+  late GlobalKey<FormState> _formKey;
+  late TextEditingController _emailController;
+  late TextEditingController _passwordController;
 
   @override
   void initState() {
-    formKey = GlobalKey<FormState>();
-    emailController = TextEditingController();
-    passwordController = TextEditingController();
+    _formKey = GlobalKey<FormState>();
+    _emailController = TextEditingController();
+    _passwordController = TextEditingController();
     super.initState();
   }
 
   @override
   void dispose() {
     _bloc.close();
-    emailController.dispose();
-    passwordController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
     super.dispose();
   }
 
@@ -83,21 +83,21 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const SizedBox(height: 8),
               Form(
-                key: formKey,
+                key: _formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     TextFieldWidget(
-                      controller: emailController,
-                      autoValidate: enabledAutoValidate,
+                      controller: _emailController,
+                      autoValidate: _enabledAutoValidate,
                       validator: (value) => validator.validateEmail(value),
                       hintText: string.of(context).emailHint,
                       title: string.of(context).email,
                       keyboardType: TextInputType.emailAddress,
                     ),
                     TextFieldWidget(
-                      controller: passwordController,
-                      autoValidate: enabledAutoValidate,
+                      controller: _passwordController,
+                      autoValidate: _enabledAutoValidate,
                       validator: (value) => validator.validatePassword(
                         value,
                         field: string.of(context).password,
@@ -111,7 +111,6 @@ class _LoginPageState extends State<LoginPage> {
                     BlocConsumer<AuthBloc, AuthState>(
                       bloc: _bloc,
                       listener: (context, state) {
-                        debug.print(state);
                         if (state is ErrorAuthState) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             style.snackbar(state.errorMsg,
@@ -119,8 +118,8 @@ class _LoginPageState extends State<LoginPage> {
                           );
                         } else if (state is SuccessAuthState) {
                           debug.print(state.token, tag: "Token");
-                          sl<LocalStorage>().token = state.token;
-                          debug.print(sl<LocalStorage>().token,
+                          sl<SharedPrefs>().token = state.token;
+                          debug.print(sl<SharedPrefs>().token,
                               tag: "Navigation");
 
                           context.pushReplacementNamed(Routes.landing);
@@ -130,13 +129,16 @@ class _LoginPageState extends State<LoginPage> {
                         return Button(
                           label: string.of(context).signIn,
                           onPressed: () {
-                            setState(() => enabledAutoValidate = true);
-                            _bloc.add(
-                              OnLoginEvent(
-                                validator.string(emailController)!,
-                                validator.string(passwordController)!,
-                              ),
-                            );
+                            if (_formKey.currentState?.validate() ?? false) {
+                              _bloc.add(
+                                OnLoginEvent(
+                                  validator.string(_emailController)!,
+                                  validator.string(_passwordController)!,
+                                ),
+                              );
+                            } else {
+                              setState(() => _enabledAutoValidate = true);
+                            }
                           },
                           loading: state is LoadingAuthState,
                         );

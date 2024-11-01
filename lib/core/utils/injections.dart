@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../features/auth/presentation/di/auth_injections.dart';
 import '../../features/user/presentation/di/user_injections.dart';
 import '../network/api_handler.dart';
-import '../shared/data/data_sources/local_storage.dart';
+import '../shared/data/data_sources/shared_prefs.dart';
 
 final sl = GetIt.instance;
 
@@ -23,6 +23,6 @@ registerSharedPreferences() async {
 }
 
 initAppInjections() {
-  sl.registerFactory<LocalStorage>(() => LocalStorage(sl()));
+  sl.registerFactory<SharedPrefs>(() => SharedPrefs(sl()));
   sl.registerFactory<ApiHandler>(() => ApiHandler());
 }

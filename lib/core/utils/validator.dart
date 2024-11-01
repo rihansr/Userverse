@@ -122,7 +122,7 @@ class CustomValidator implements Validator {
   @override
   String? validatePassword(var value, {String? field, String? matchValue}) {
     String? message = validateField(value,
-        field: field ?? str.string.of().password, minLength: 6, maxLength: 40);
+        field: field ?? str.string.of().password, minLength: 8, maxLength: 40);
     if (message != null) {
       return message;
     } else if (matchValue != null && value != matchValue) {

@@ -1,16 +1,37 @@
-# userverse
+# Userverse
 
-A new Flutter project.
+Userverse is a Flutter application designed to display user information.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+### Download
 
-A few resources to get you started if this is your first Flutter project:
+You can download the latest version of the application from the following links:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- [Google Drive](https://drive.google.com/file/d/1ZCsCEb1KP5vKe4oV2jsloJwE0KlFmYvG/view?usp=sharing)
+- [GitHub Releases](https://github.com/rihansr/Userverse/releases/tag/v1.0.1)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Prerequisites
+
+Ensure you have the following installed on your system:
+
+- Flutter SDK: [Installation Guide](https://docs.flutter.dev/get-started/install)
+- Dart SDK: [Installation Guide](https://dart.dev/get-dart)
+
+### Steps
+
+1. Clone the repository:
+    ```sh
+    git clone https://github.com/rihansr/Userverse.git
+    cd Userverse
+    ```
+
+2. Install dependencies:
+    ```sh
+    flutter pub get
+    ```
+
+3. Run the application:
+    ```sh
+    flutter run
+    ```

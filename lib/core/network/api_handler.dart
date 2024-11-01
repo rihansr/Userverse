@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
-import 'package:userverse/core/utils/debug.dart';
 import 'error/dio_error_handler.dart';
 import 'error/exceptions.dart';
 import 'logger_interceptor.dart';

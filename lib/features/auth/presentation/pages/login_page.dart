@@ -2,12 +2,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:userverse/core/utils/debug.dart';
 import '../../../../core/routing/routes.dart';
 import '../../../../core/styles/dimens.dart';
 import '../../../../core/styles/drawables.dart';
 import '../../../../core/shared/domain/entities/enums.dart';
-import '../../../../core/shared/data/data_sources/shared_prefs.dart';
 import '../../../../core/styles/strings.dart';
 import '../../../../core/styles/styles.dart';
 import '../../../../core/utils/injections.dart';
@@ -117,11 +115,6 @@ class _LoginPageState extends State<LoginPage> {
                                 type: AlertType.error),
                           );
                         } else if (state is SuccessAuthState) {
-                          debug.print(state.token, tag: "Token");
-                          sl<SharedPrefs>().token = state.token;
-                          debug.print(sl<SharedPrefs>().token,
-                              tag: "Navigation");
-
                           context.pushReplacementNamed(Routes.landing);
                         }
                       },

@@ -23,4 +23,16 @@ class UsersRepositoryImpl extends UsersRepository {
       return Left(CancelTokenFailure(e.message, e.statusCode));
     }
   }
+
+  @override
+  Future<Either<Failure, UserModel>> singleUser(int id) async {
+    try {
+      final result = await usersApi.singleUser(id);
+      return Right(result);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message, e.statusCode));
+    } on CancelTokenException catch (e) {
+      return Left(CancelTokenFailure(e.message, e.statusCode));
+    }
+  }
 }

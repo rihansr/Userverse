@@ -4,7 +4,7 @@ import 'package:lottie/lottie.dart';
 import '../../../../../core/shared/presentation/widgets/listview_builder_widget.dart';
 import '../../../../../core/styles/drawables.dart';
 import '../../../../../core/utils/injections.dart';
-import '../../../../user/domain/usecases/users_usacase.dart';
+import '../../../domain/usecases/users_usecase.dart';
 import '../../bloc/dashboard_bloc.dart';
 import '../../components/user_item.dart';
 
@@ -59,6 +59,7 @@ class _HomeTabPageState extends State<HomeTabPage> {
             itemBuilder: (i, user) => UserItem(
               key: ValueKey(user?.id ?? i),
               user: user,
+              tag: 'user-${user?.id ?? i}',
             ),
           );
         }

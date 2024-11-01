@@ -20,4 +20,15 @@ class UsersImplApi extends UsersApi {
     );
     return UserModel.fromJsonList(result.data ?? []);
   }
+
+  @override
+  Future<UserModel> singleUser(int id) async {
+    final result = await sl<ApiHandler>().invoke(
+      baseUrl: appConfig.config["base_url"]["content"],
+      endpoint: serverEnv.users,
+      pathParams: [id],
+      method: Method.get,
+    );
+    return UserModel.fromJson(result.data ?? {});
+  }
 }

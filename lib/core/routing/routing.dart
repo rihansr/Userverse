@@ -36,7 +36,7 @@ final GoRouter routing = GoRouter(
       name: Routes.user,
       path: '${Routes.user}/:id',
       builder: (BuildContext context, GoRouterState state) {
-        return const UserDetailsPage();
+        return  UserDetailsPage(id: int.parse(state.pathParameters['id']!));
       },
     ),
   ],

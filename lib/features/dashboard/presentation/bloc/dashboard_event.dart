@@ -1,9 +1,9 @@
 part of 'dashboard_bloc.dart';
 
-abstract class AuthEvent {
-  const AuthEvent();
+abstract class DashboardEvent {
+  const DashboardEvent();
 }
 
-class OnFetchUsersEvent extends AuthEvent {
+class OnFetchUsersEvent extends DashboardEvent {
   OnFetchUsersEvent();
 }

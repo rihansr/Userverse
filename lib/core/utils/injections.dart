@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../features/auth/presentation/di/auth_injections.dart';
-import '../../features/user/presentation/di/users_injections.dart';
+import '../../features/user/presentation/di/user_injections.dart';
 import '../network/api_handler.dart';
 import '../shared/data/data_sources/local_storage.dart';
 
@@ -12,7 +12,7 @@ Future<void> initInjections() async {
   await ApiHandler.init();
   await initAppInjections();
   await initAuthInjections();
-  await initUsersInjections();
+  await initUserInjections();
 }
 
 registerSharedPreferences() async {

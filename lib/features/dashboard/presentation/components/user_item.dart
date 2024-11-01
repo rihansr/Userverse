@@ -10,9 +10,11 @@ class UserItem extends StatelessWidget {
   const UserItem({
     super.key,
     required this.user,
+    required this.tag,
   });
 
   final UserModel? user;
+  final String tag;
 
   @override
   Widget build(BuildContext context) {
@@ -28,45 +30,44 @@ class UserItem extends StatelessWidget {
                 extra: user,
               );
             },
-      child: Card(
-        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: ListTile(
-          contentPadding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-          horizontalTitleGap: 12,
-          leading: style.avatar(user?.name ?? ''),
-          title: FittedBox(
-            fit: BoxFit.scaleDown,
-            alignment: Alignment.centerLeft,
-            child: Text(
+      child: Hero(
+        tag: tag,
+        child: Card(
+          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: ListTile(
+            contentPadding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+            horizontalTitleGap: 12,
+            leading: style.avatar(user?.name ?? ''),
+            title: Text(
               user?.name ?? string.of(context).anonymous,
               maxLines: 1,
               style: theme.textTheme.bodyMedium?.copyWith(
                 fontWeight: FontWeight.w600,
               ),
             ),
-          ),
-          subtitle: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                user?.email ?? 'N/A',
-                style: theme.textTheme.labelLarge?.copyWith(
-                  color: theme.hintColor,
-                  fontWeight: FontWeight.w400,
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  user?.email ?? 'N/A',
+                  style: theme.textTheme.labelLarge?.copyWith(
+                    color: theme.hintColor,
+                    fontWeight: FontWeight.w400,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                user?.company?.toString() ?? 'N/A',
-                maxLines: 1,
-                style: theme.textTheme.labelLarge?.copyWith(
-                  fontWeight: FontWeight.w400,
+                const SizedBox(height: 4),
+                Text(
+                  user?.company?.toString() ?? 'N/A',
+                  maxLines: 1,
+                  style: theme.textTheme.labelLarge?.copyWith(
+                    fontWeight: FontWeight.w400,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

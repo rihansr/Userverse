@@ -16,7 +16,7 @@ import 'model/response_model.dart';
 
 enum Method { get, post, put, delete }
 
-enum InvokeType { regular, multipart, download }
+enum InvokeType { form, multipart, download }
 
 class ApiHandler {
   static late Dio _dio;
@@ -36,7 +36,7 @@ class ApiHandler {
       );
 
   Future<DioResponse> invoke({
-    InvokeType via = InvokeType.regular,
+    InvokeType via = InvokeType.form,
     required String baseUrl,
     String? endpoint,
     required Method method,
@@ -45,7 +45,7 @@ class ApiHandler {
     var body,
     List<dynamic>? pathParams,
     Map<String, dynamic>? queryParams,
-    Duration timeout = const Duration(seconds: 30),
+    Duration timeout = const Duration(seconds: 10),
     String? contentType,
     bool contentTypeSupported = false,
     String? token,
@@ -90,7 +90,7 @@ class ApiHandler {
 
             _dio.options = (() {
               switch (via) {
-                case InvokeType.regular:
+                case InvokeType.form:
                   return baseOptions.copyWith(
                     connectTimeout: timeout,
                     sendTimeout: timeout,

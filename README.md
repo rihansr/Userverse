@@ -1,6 +1,6 @@
 # Userverse
 
-<img src="https://github.com/rihansr/Userverse/blob/main/preview.gif" width="25%" height="25%"/>
+<img src="https://github.com/rihansr/Userverse/blob/main/preview.gif" width="30%" height="30%"/>
 
 ## Project Structure
 
@@ -31,7 +31,7 @@ The application uses `flutter_bloc` for state management, which helps in managin
 You can download the latest version of the application from the following links:
 
 - [Google Drive](https://drive.google.com/file/d/1ZCsCEb1KP5vKe4oV2jsloJwE0KlFmYvG/view?usp=sharing)
-- [GitHub Releases](https://github.com/rihansr/Userverse/releases/tag/v1.0.2)
+- [GitHub Releases](https://github.com/rihansr/Userverse/releases/tag/v1.0.1)
 
 ### Prerequisites
 

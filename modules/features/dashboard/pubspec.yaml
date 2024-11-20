@@ -1,0 +1,30 @@
+name: dashboard
+description: "A new Flutter package project."
+version: 0.0.1
+publish_to: 'none'
+
+environment:
+  sdk: ^3.5.4
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # UI
+  iconsax: ^0.0.8
+  
+  # Modules
+  core:
+    path: ../../core
+  shared:
+    path: ../../shared
+  settings:
+    path: ../settings
+  user:
+    path: ../user
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0

@@ -1,0 +1,32 @@
+name: core
+description: "A new Flutter package project."
+version: 0.0.1
+publish_to: 'none'
+
+environment:
+  sdk: ^3.5.4
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+   # Internationalization
+  flutter_localizations:
+    sdk: flutter
+
+  # Routing
+  go_router: ^14.6.0
+
+  # Utils
+  encrypt: ^5.0.3
+  dartz: ^0.10.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  generate: true
+

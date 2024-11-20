@@ -1,5 +1,7 @@
 # Userverse
 
+![](https://github.com/rihansr/Userverse/blob/main/preview.gif)
+
 ## Project Structure
 
 ### Modules

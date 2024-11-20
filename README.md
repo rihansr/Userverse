@@ -1,6 +1,6 @@
 # Userverse
 
-![](https://github.com/rihansr/Userverse/blob/main/preview.gif)
+<img src="https://github.com/rihansr/Userverse/blob/main/preview.gif" width="25%" height="25%"/>
 
 ## Project Structure
 
